@@ -33,6 +33,7 @@ public class WebActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_web);
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
