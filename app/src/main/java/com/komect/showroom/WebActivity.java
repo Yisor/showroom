@@ -14,18 +14,22 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.komect.showroom.databinding.ActivityWebBinding;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebActivity extends AppCompatActivity {
     protected static final String EXTRA_BUNDLE = "bundle";
     public static final String BUNDLE_SESSION_ID = "sessionId";
     public static final String BUNDLE_MOBILE = "mobile";
 
+    private List<String> loadHistoryUrls = new ArrayList<>();
+    private List<String> historyTitles = new ArrayList<>();
     private String mUrl;
-
     private WebView mWebView;
-    private ActivityWebBinding binding;
     private String sessionId;
     private String mobile;
+
+    private ActivityWebBinding binding;
 
 
     @Override
@@ -40,6 +44,9 @@ public class WebActivity extends AppCompatActivity {
             @Override public void onClick(View view) {
                 if (mWebView.canGoBack()) {
                     mWebView.goBack();
+                    String title = historyTitles.get(historyTitles.size()-2);
+                    historyTitles.remove(historyTitles.size()-1);
+                    binding.includeTopbar.tvTitle.setText(title);
                 } else {
                     finish();
                 }
@@ -94,6 +101,9 @@ public class WebActivity extends AppCompatActivity {
                 case KeyEvent.KEYCODE_BACK:
                     if (mWebView.canGoBack()) {
                         mWebView.goBack();
+                        String title = historyTitles.get(historyTitles.size()-2);
+                        historyTitles.remove(historyTitles.size()-1);
+                        binding.includeTopbar.tvTitle.setText(title);
                     } else {
                         finish();
                     }
@@ -122,6 +132,9 @@ public class WebActivity extends AppCompatActivity {
     }
 
 
+    /**
+     *
+     */
     private class ChromeClient extends WebChromeClient {
 
         @Override public void onProgressChanged(WebView view, int newProgress) {
@@ -137,11 +150,15 @@ public class WebActivity extends AppCompatActivity {
 
         @Override public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
-            binding.toolbarTitle.setText(title);
+            //binding.toolbarTitle.setText(title);
             binding.includeTopbar.tvTitle.setText(title);
+            historyTitles.add(title);
         }
     }
 
+    /**
+     *
+     */
     private class ZTWebViewClient extends WebViewClient {
 
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -155,6 +172,12 @@ public class WebActivity extends AppCompatActivity {
             } catch (Exception e) {
             }
             return true;
+        }
+
+
+        @Override public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            //binding.includeTopbar.tvTitle.setText(view.getTitle());
         }
     }
 }
