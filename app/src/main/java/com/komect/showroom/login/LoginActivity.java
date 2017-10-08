@@ -40,7 +40,7 @@ public class LoginActivity extends BaseActivity {
         loginBean.setPhone("18000000000");
         binding.setLogin(loginBean);
         binding.setPresenter(loginPresenter);
-        binding.toolbarTitle.setText(R.string.login_title_txt);
+        //binding.toolbarTitle.setText(R.string.app_name);
     }
 }
 
