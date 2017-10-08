@@ -11,6 +11,9 @@ import com.komect.showroom.event.GlobalMsgEvent;
 
 public class HttpResponseHandler {
     public static JsonObject handleResponse(BaseResult baseResult) {
+        if (baseResult == null) {
+            return null;
+        }
         final int recode = baseResult.getRecode();
         switch (recode) {
             case 200:

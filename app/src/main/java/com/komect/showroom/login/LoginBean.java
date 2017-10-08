@@ -50,7 +50,7 @@ public class LoginBean {
                 isPhoneNumberCompleted.set(false);
             }
             if (isPasswordNull.get()) {
-                if (phone.length() == 11 && password.length() > 5) {
+                if (phone.length() == 11 && password.length() > 0) {
                     isPassCompleted.set(true);
                 } else {
                     isPassCompleted.set(false);

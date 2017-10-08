@@ -106,7 +106,7 @@ public class KomectManager {
                         throws IOException {
                     Request request = chain.request()
                             .newBuilder()
-                            .addHeader("Content-Type", "application/octet-stream;charset=UTF-8")
+                            .addHeader("Content-Type", "application/json;charset=UTF-8")
                             .build();
                     return chain.proceed(request);
                 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+import com.komect.showroom.dagger.AppComponent;
 import com.komect.showroom.event.ActivityStartEvent;
 import com.komect.showroom.event.GlobalMsgEvent;
 import org.greenrobot.eventbus.EventBus;
@@ -45,9 +46,10 @@ public class BaseActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    //public AppComponent getAppComponent() {
-    //    return AppComponent.getInstance(getApplicationContext());
-    //}
+
+    public AppComponent getAppComponent() {
+        return AppComponent.getInstance(getApplicationContext());
+    }
 
 
     /**

@@ -6,7 +6,23 @@ import org.greenrobot.eventbus.EventBus;
  * Created by lsl on 2017/9/7.
  */
 public class LoginResult {
-    // TODO: 2017/9/30 添加登录后的返回格式
+
+    /**
+     * sessionId : 4CEDE06141E3D457F7E6C157DA47A4B2
+     */
+
+    public String sessionId;
+
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
 
     /**
      * 将当前对象通过EventBus发送出去

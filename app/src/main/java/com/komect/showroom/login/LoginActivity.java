@@ -1,14 +1,14 @@
 package com.komect.showroom.login;
 
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import com.komect.showroom.BaseActivity;
-import com.komect.showroom.MainActivity;
+import com.komect.showroom.BuildConfig;
 import com.komect.showroom.R;
 import com.komect.showroom.ZtApp;
 import com.komect.showroom.databinding.ActivityLoginBinding;
 import com.komect.showroom.util.SimpleCacheUtil;
+import javax.inject.Inject;
 
 /**
  * A login screen.
@@ -17,8 +17,11 @@ public class LoginActivity extends BaseActivity {
 
     private ActivityLoginBinding binding;
 
+    @Inject
     LoginBean loginBean;
+    @Inject
     LoginPresenter loginPresenter;
+    @Inject
     SimpleCacheUtil cacheUtil;
 
 
@@ -26,22 +29,17 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        ZtApp.init(this, "http://172.23.23.54:8080");
+        getAppComponent().inject(this);
+        setSupportActionBar(binding.toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+        ZtApp.init(this, BuildConfig.HTTP_HOST);
 
-        loginBean = new LoginBean();
         loginBean.setPassword("123456");
-        loginBean.setPhone("18800000000");
+        loginBean.setPhone("18000000000");
         binding.setLogin(loginBean);
-
-        loginPresenter = new LoginPresenter();
         binding.setPresenter(loginPresenter);
-    }
-
-
-    public void loginResult() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }
 

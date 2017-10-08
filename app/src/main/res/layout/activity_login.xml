@@ -20,37 +20,74 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <EditText
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="60dp"
-            android:background="@drawable/edit_gray_react"
-            android:drawableLeft="@drawable/icon_phone"
-            android:drawablePadding="10dp"
-            android:hint="@string/input_phone_hint"
-            android:inputType="phone"
-            android:maxLength="11"
-            android:maxLines="1"
-            android:text="@={login.phone}"
-            android:textSize="14sp"/>
+            android:layout_height="wrap_content"
+            android:background="@color/bgBlue">
+
+            <!--自定义控件-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""/>
+        </android.support.v7.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="40dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="手机号码"
+                android:textSize="16sp"/>
+
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="@string/input_phone_hint"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:maxLines="1"
+                android:text="@={login.phone}"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/dividerColor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="验证码"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:background="@drawable/edit_gray_react"
-                android:drawableLeft="@drawable/icon_psw"
-                android:drawablePadding="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
                 android:hint="@string/input_psw_hint"
                 android:inputType="textPassword"
                 android:maxLength="6"
@@ -58,27 +95,33 @@
                 android:text="@={login.password}"
                 android:textSize="14sp"/>
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:layout_weight="1"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/sel_login_btn_bg"
                 android:enabled="@{login.isPhoneNumberCompleted}"
                 android:onClick="@{()->presenter.onGetCodeClick(login)}"
+                android:gravity="center"
                 android:text="@string/get_code"
                 android:textSize="16sp"
-                android:textColor="@color/white"/>
+                android:textColor="@color/txtBlue"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/dividerColor"/>
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="40dp"
-            android:background="@drawable/sel_login_btn_bg"
+            android:background="@drawable/btn_blue_react"
             android:enabled="@{login.isPassCompleted}"
             android:onClick="@{()->presenter.onLoginClick(login)}"
             android:text="@string/login_txt"

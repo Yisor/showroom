@@ -1,11 +1,9 @@
 <resources>
-    <string name="app_name">展厅</string>
+    <string name="app_name">掌厅</string>
 
-    <string name="input_phone_hint">请输入手机号</string>
-    <string name="input_psw_hint">请输入验证码</string>
+    <string name="input_phone_hint">请输入手机号码</string>
+    <string name="input_psw_hint">请输入短信验证码</string>
     <string name="get_code">获取验证码</string>
     <string name="login_txt">登录</string>
-
-    <string name="action_sign_in">登录</string>
 
 </resources>
