@@ -16,12 +16,15 @@ import com.komect.showroom.databinding.ActivityWebBinding;
 
 public class WebActivity extends AppCompatActivity {
     protected static final String EXTRA_BUNDLE = "bundle";
+    public static final String BUNDLE_SESSION_ID = "sessionId";
+    public static final String BUNDLE_MOBILE = "mobile";
 
-    private String mUrl = "https://m.taobao.com";
+    private String mUrl;
 
     private WebView mWebView;
     private ActivityWebBinding binding;
     private String sessionId;
+    private String mobile;
 
 
     @Override
@@ -35,9 +38,10 @@ public class WebActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra(EXTRA_BUNDLE)) {
             Bundle bundle = getIntent().getBundleExtra(EXTRA_BUNDLE);
-            if (bundle.containsKey("sessionId")) {
-                sessionId = bundle.getString("sessionId", "");
-                mUrl = BuildConfig.H5_HOST + "?sessionId=" + sessionId;
+            if (bundle.containsKey(BUNDLE_SESSION_ID)) {
+                sessionId = bundle.getString(BUNDLE_SESSION_ID, "");
+                mobile = bundle.getString(BUNDLE_MOBILE, "");
+                mUrl = BuildConfig.H5_HOST + "?sessionId=" + sessionId + "&mobile=" + mobile;
                 Log.d("tlog", "onCreate 拼接后: " + mUrl);
             }
         }

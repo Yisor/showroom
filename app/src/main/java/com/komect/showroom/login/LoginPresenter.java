@@ -26,6 +26,7 @@ import retrofit2.Response;
 
 public class LoginPresenter {
     public static final String BUNDLE_SESSION_ID = "sessionId";
+    public static final String BUNDLE_MOBILE = "mobile";
 
     private String verifyCode = null;
     private SimpleCacheUtil cacheUtil;
@@ -76,7 +77,7 @@ public class LoginPresenter {
     /**
      * 登录
      */
-    public void onLoginClick(LoginBean login) {
+    public void onLoginClick(final LoginBean login) {
         if (!StringUtil.isMobile(login.getPhone())) {
             new GlobalMsgEvent().setMsg("请填写正确的手机号").send();
             return;
@@ -103,6 +104,7 @@ public class LoginPresenter {
 
                          Bundle bundle = new Bundle();
                          bundle.putString(BUNDLE_SESSION_ID, loginResult.getSessionId());
+                         bundle.putString(BUNDLE_MOBILE,login.getPhone());
                          // 界面跳转
                          new ActivityStartEvent()
                                  .setIntentFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
