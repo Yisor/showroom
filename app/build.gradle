@@ -33,7 +33,7 @@ android {
             buildConfigField("String", "HTTP_PORT", "\"58888\"")
 //            buildConfigField("String", "HTTP_HOST", "\"http://172.23.23.54:8080\"")
             buildConfigField("String", "HTTP_HOST", "\"http://218.205.115.248:48080\"")
-            buildConfigField("String", "H5_HOST", "\"http://172.23.23.54:8080/allInOne/halls/root.html\"")
+            buildConfigField("String", "H5_HOST", "\"http://218.205.115.248:48080/allInOne/halls/root.html\"")
 
         }
 
