@@ -2,6 +2,7 @@ package com.komect.showroom.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -30,6 +31,13 @@ public class LoginPresenter {
 
     private String verifyCode = null;
     private SimpleCacheUtil cacheUtil;
+    private LoginActivity mLoginActivity;
+
+
+    public void bindView(LoginActivity loginActivity) {
+        mLoginActivity = loginActivity;
+    }
+
 
     public SimpleCacheUtil getCacheUtil() {
         return cacheUtil;
@@ -40,6 +48,7 @@ public class LoginPresenter {
         this.cacheUtil = cacheUtil;
     }
 
+
     /**
      * 获取验证码
      */
@@ -49,8 +58,17 @@ public class LoginPresenter {
             new GlobalMsgEvent().setMsg("请填写正确的手机号").send();
             return;
         }
-        // TODO: 2017/9/30 登录的http请求
-        new GlobalMsgEvent().setMsg("获取验证码成功").send();
+        mLoginActivity.onTimeStart();
+
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                // TODO: 2017/9/30 登录的http请求
+                new GlobalMsgEvent().setMsg("获取验证码成功").send();
+
+                mLoginActivity.onCancel();
+            }
+        }, 1000 * 5);
+
 
         ZtApp.getRetrofitService().getVerifyMessage(login.getPhone())
              .enqueue(new Callback<BaseResult>() {
@@ -104,7 +122,7 @@ public class LoginPresenter {
 
                          Bundle bundle = new Bundle();
                          bundle.putString(BUNDLE_SESSION_ID, loginResult.getSessionId());
-                         bundle.putString(BUNDLE_MOBILE,login.getPhone());
+                         bundle.putString(BUNDLE_MOBILE, login.getPhone());
                          // 界面跳转
                          new ActivityStartEvent()
                                  .setIntentFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

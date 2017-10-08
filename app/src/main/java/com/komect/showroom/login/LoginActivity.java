@@ -2,6 +2,7 @@ package com.komect.showroom.login;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import com.komect.showroom.BaseActivity;
 import com.komect.showroom.BuildConfig;
 import com.komect.showroom.R;
@@ -41,6 +42,40 @@ public class LoginActivity extends BaseActivity {
         binding.setLogin(loginBean);
         binding.setPresenter(loginPresenter);
         //binding.toolbarTitle.setText(R.string.app_name);
+        loginPresenter.bindView(this);
     }
+
+
+    /**
+     * 取消倒计时
+     */
+    public void onCancel() {
+        timer.cancel();
+        binding.txtGetcode.setText("获取验证码");
+    }
+
+
+    /**
+     * 开始倒计时
+     */
+    public void onTimeStart() {
+        timer.start();
+    }
+
+
+    private CountDownTimer timer = new CountDownTimer(60000, 1000) {
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            binding.txtGetcode.setText((millisUntilFinished / 1000) + "秒后可重发");
+        }
+
+
+        @Override
+        public void onFinish() {
+            binding.txtGetcode.setEnabled(true);
+            binding.txtGetcode.setText("获取验证码");
+        }
+    };
 }
 

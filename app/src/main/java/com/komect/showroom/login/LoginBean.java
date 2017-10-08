@@ -7,6 +7,7 @@ import android.databinding.ObservableField;
  */
 
 public class LoginBean {
+    public final ObservableField<String> btPassCode = new ObservableField<>("发送验证码"); //获取验证码按钮显示的文字
     public final ObservableField<Boolean> isPhoneNumberCompleted = new ObservableField<>(false);//是否可以获取验证码
     public final ObservableField<Boolean> isPhoneNumberNull = new ObservableField<>(false);//手机号是否为空 true 为非空，false为空
     public final ObservableField<Boolean> isPassCompleted = new ObservableField<>(false);//是否可以登录

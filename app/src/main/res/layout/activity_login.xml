@@ -102,6 +102,7 @@
                 android:textSize="14sp"/>
 
             <TextView
+                android:id="@+id/txt_getcode"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -109,7 +110,7 @@
                 android:enabled="@{login.isPhoneNumberCompleted}"
                 android:onClick="@{()->presenter.onGetCodeClick(login)}"
                 android:gravity="center"
-                android:text="@string/get_code"
+                android:text="@={login.btPassCode}"
                 android:textSize="16sp"
                 android:textColor="@color/txtBlue"/>
         </LinearLayout>
