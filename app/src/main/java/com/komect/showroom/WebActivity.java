@@ -37,7 +37,7 @@ public class WebActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getBundleExtra(EXTRA_BUNDLE);
             if (bundle.containsKey("sessionId")) {
                 sessionId = bundle.getString("sessionId", "");
-                mUrl = mUrl + "?sessionId=" + sessionId;
+                mUrl = BuildConfig.H5_HOST + "?sessionId=" + sessionId;
                 Log.d("tlog", "onCreate 拼接后: " + mUrl);
             }
         }
