@@ -14,6 +14,7 @@ import com.komect.showroom.data.response.VerifyMessageResult;
 import com.komect.showroom.event.ActivityStartEvent;
 import com.komect.showroom.event.GlobalMsgEvent;
 import com.komect.showroom.http.HttpResponseHandler;
+import com.komect.showroom.util.SimpleCacheUtil;
 import com.komect.showroom.util.StringUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,10 +25,19 @@ import retrofit2.Response;
  */
 
 public class LoginPresenter {
-
-    private String verifyCode = null;
     public static final String BUNDLE_SESSION_ID = "sessionId";
 
+    private String verifyCode = null;
+    private SimpleCacheUtil cacheUtil;
+
+    public SimpleCacheUtil getCacheUtil() {
+        return cacheUtil;
+    }
+
+
+    public void setCacheUtil(SimpleCacheUtil cacheUtil) {
+        this.cacheUtil = cacheUtil;
+    }
 
     /**
      * 获取验证码
@@ -75,13 +85,6 @@ public class LoginPresenter {
         //    new GlobalMsgEvent().setMsg("请获取验证码").send();
         //    return;
         //}
-
-        // 界面跳转
-        //new ActivityStartEvent()
-        //        .setIntentFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        //        .setFinishCurrentActivity(true)
-        //        .setTargetActivityCls(WebActivity.class)
-        //        .send();
 
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setPhoneNumber(login.getPhone());
