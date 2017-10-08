@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -33,9 +34,17 @@ public class WebActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_web);
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
-            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        binding.includeTopbar.btLeft.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                if (mWebView.canGoBack()) {
+                    mWebView.goBack();
+                } else {
+                    finish();
+                }
+            }
+        });
 
         if (getIntent().hasExtra(EXTRA_BUNDLE)) {
             Bundle bundle = getIntent().getBundleExtra(EXTRA_BUNDLE);
@@ -62,7 +71,7 @@ public class WebActivity extends AppCompatActivity {
     }
 
 
-    private void refresh() {
+    private void onRefresh() {
         mWebView.reload();
     }
 
@@ -128,8 +137,8 @@ public class WebActivity extends AppCompatActivity {
 
         @Override public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
-            //setTitle(title);
             binding.toolbarTitle.setText(title);
+            binding.includeTopbar.tvTitle.setText(title);
         }
     }
 

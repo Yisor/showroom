@@ -10,7 +10,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/bgBlue">
+            android:background="@color/bgBlue"
+            android:visibility="gone">
 
             <!--标题栏居中-->
             <TextView
@@ -24,6 +25,10 @@
                 android:textSize="18sp"
                 android:textColor="@android:color/white"/>
         </android.support.v7.widget.Toolbar>
+
+        <include
+            android:id="@+id/include_topbar"
+            layout="@layout/layout_common_topbar"/>
 
         <WebView
             android:id="@+id/webView"
