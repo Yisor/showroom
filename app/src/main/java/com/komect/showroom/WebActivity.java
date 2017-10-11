@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -17,39 +16,29 @@ import com.komect.showroom.databinding.ActivityWebBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by lsl on 2017/9/30.
+ */
 public class WebActivity extends AppCompatActivity {
     protected static final String EXTRA_BUNDLE = "bundle";
     public static final String BUNDLE_SESSION_ID = "sessionId";
     public static final String BUNDLE_MOBILE = "mobile";
 
-    private List<String> loadHistoryUrls = new ArrayList<>();
-    private List<String> historyTitles = new ArrayList<>();
+    private ActivityWebBinding binding;
     private String mUrl;
     private WebView mWebView;
     private String sessionId;
     private String mobile;
-
-    private ActivityWebBinding binding;
+    private List<String> historyTitles = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_web);
-        setSupportActionBar(binding.toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
         binding.includeTopbar.btLeft.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                if (mWebView.canGoBack()) {
-                    mWebView.goBack();
-                    String title = historyTitles.get(historyTitles.size()-2);
-                    historyTitles.remove(historyTitles.size()-1);
-                    binding.includeTopbar.tvTitle.setText(title);
-                } else {
-                    finish();
-                }
+                webGoBack();
             }
         });
 
@@ -59,7 +48,6 @@ public class WebActivity extends AppCompatActivity {
                 sessionId = bundle.getString(BUNDLE_SESSION_ID, "");
                 mobile = bundle.getString(BUNDLE_MOBILE, "");
                 mUrl = BuildConfig.H5_HOST + "?sessionId=" + sessionId + "&mobile=" + mobile;
-                Log.d("tlog", "onCreate 拼接后: " + mUrl);
             }
         }
 
@@ -78,35 +66,11 @@ public class WebActivity extends AppCompatActivity {
     }
 
 
-    private void onRefresh() {
-        mWebView.reload();
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //点击back键finish当前activity
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return true;
-    }
-
-
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_BACK:
-                    if (mWebView.canGoBack()) {
-                        mWebView.goBack();
-                        String title = historyTitles.get(historyTitles.size()-2);
-                        historyTitles.remove(historyTitles.size()-1);
-                        binding.includeTopbar.tvTitle.setText(title);
-                    } else {
-                        finish();
-                    }
+                    webGoBack();
                     return true;
             }
         }
@@ -114,21 +78,23 @@ public class WebActivity extends AppCompatActivity {
     }
 
 
-    @Override protected void onDestroy() {
-        super.onDestroy();
-        if (mWebView != null) mWebView.destroy();
+    /**
+     * 返回
+     */
+    private void webGoBack() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();
+            String title = historyTitles.get(historyTitles.size() - 2);
+            historyTitles.remove(historyTitles.size() - 1);
+            binding.includeTopbar.tvTitle.setText(title);
+        } else {
+            finish();
+        }
     }
 
 
-    @Override protected void onPause() {
-        if (mWebView != null) mWebView.onPause();
-        super.onPause();
-    }
-
-
-    @Override protected void onResume() {
-        super.onResume();
-        if (mWebView != null) mWebView.onResume();
+    private void onRefresh() {
+        mWebView.reload();
     }
 
 
@@ -150,7 +116,6 @@ public class WebActivity extends AppCompatActivity {
 
         @Override public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
-            //binding.toolbarTitle.setText(title);
             binding.includeTopbar.tvTitle.setText(title);
             historyTitles.add(title);
         }
@@ -173,11 +138,23 @@ public class WebActivity extends AppCompatActivity {
             }
             return true;
         }
+    }
 
 
-        @Override public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            //binding.includeTopbar.tvTitle.setText(view.getTitle());
-        }
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        if (mWebView != null) mWebView.destroy();
+    }
+
+
+    @Override protected void onPause() {
+        if (mWebView != null) mWebView.onPause();
+        super.onPause();
+    }
+
+
+    @Override protected void onResume() {
+        super.onResume();
+        if (mWebView != null) mWebView.onResume();
     }
 }
