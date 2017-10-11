@@ -15,6 +15,7 @@ import com.komect.showroom.data.response.VerifyMessageResult;
 import com.komect.showroom.event.ActivityStartEvent;
 import com.komect.showroom.event.GlobalMsgEvent;
 import com.komect.showroom.http.HttpResponseHandler;
+import com.komect.showroom.util.EmptyUtils;
 import com.komect.showroom.util.SimpleCacheUtil;
 import com.komect.showroom.util.StringUtil;
 import retrofit2.Call;
@@ -28,6 +29,7 @@ import retrofit2.Response;
 public class LoginPresenter {
     public static final String BUNDLE_SESSION_ID = "sessionId";
     public static final String BUNDLE_MOBILE = "mobile";
+    public static final String MOCK_MSG_CODE = "123456";
 
     private String verifyCode = null;
     private SimpleCacheUtil cacheUtil;
@@ -53,7 +55,6 @@ public class LoginPresenter {
      * 获取验证码
      */
     public void onGetCodeClick(final LoginBean login) {
-
         if (!StringUtil.isMobile(login.getPhone())) {
             new GlobalMsgEvent().setMsg("请填写正确的手机号").send();
             return;
@@ -62,13 +63,13 @@ public class LoginPresenter {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                // TODO: 2017/9/30 登录的http请求
+                // TODO: 2017/10/11 模拟http请求
+                verifyCode = MOCK_MSG_CODE;
                 new GlobalMsgEvent().setMsg("获取验证码成功").send();
 
                 mLoginActivity.onCancel();
             }
         }, 1000 * 5);
-
 
         ZtApp.getRetrofitService().getVerifyMessage(login.getPhone())
              .enqueue(new Callback<BaseResult>() {
@@ -100,10 +101,10 @@ public class LoginPresenter {
             new GlobalMsgEvent().setMsg("请填写正确的手机号").send();
             return;
         }
-        //if (EmptyUtils.isEmpty(verifyCode)) {
-        //    new GlobalMsgEvent().setMsg("请获取验证码").send();
-        //    return;
-        //}
+        if (EmptyUtils.isEmpty(verifyCode)) {
+            new GlobalMsgEvent().setMsg("请获取验证码").send();
+            return;
+        }
 
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setPhoneNumber(login.getPhone());

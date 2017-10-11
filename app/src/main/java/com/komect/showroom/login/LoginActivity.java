@@ -31,18 +31,23 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         getAppComponent().inject(this);
-        setSupportActionBar(binding.toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
         ZtApp.init(this, BuildConfig.HTTP_HOST);
+
+        initToolbar();
 
         loginBean.setPassword("123456");
         loginBean.setPhone("18000000000");
         binding.setLogin(loginBean);
         binding.setPresenter(loginPresenter);
-        //binding.toolbarTitle.setText(R.string.app_name);
         loginPresenter.bindView(this);
+    }
+
+
+    private void initToolbar() {
+        setSupportActionBar(binding.toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
     }
 
 
@@ -51,7 +56,7 @@ public class LoginActivity extends BaseActivity {
      */
     public void onCancel() {
         timer.cancel();
-        binding.txtGetcode.setText("获取验证码");
+        binding.txtGetcode.setText(R.string.getcode);
     }
 
 
@@ -63,18 +68,21 @@ public class LoginActivity extends BaseActivity {
     }
 
 
+    /**
+     * 倒计时
+     */
     private CountDownTimer timer = new CountDownTimer(60000, 1000) {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            binding.txtGetcode.setText((millisUntilFinished / 1000) + "秒后可重发");
+            binding.txtGetcode.setText((millisUntilFinished / 1000) + getString(R.string.resent_after_as));
         }
 
 
         @Override
         public void onFinish() {
             binding.txtGetcode.setEnabled(true);
-            binding.txtGetcode.setText("获取验证码");
+            binding.txtGetcode.setText(R.string.getcode);
         }
     };
 }
